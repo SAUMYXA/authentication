@@ -6,6 +6,12 @@ const app = express();
 dotenv.config({ path: "./config.env" });
 require("./db/conn");
 
+app.use(express.json());
+
+// const User = require("./model/userSchema");
+
+app.use(require('./model/userSchema'))
+
 // const DB =
 //   "mongodb+srv://saumyxa:auth@cluster0.cydzejp.mongodb.net/mernstack?retryWrites=true&w=majority";
 
