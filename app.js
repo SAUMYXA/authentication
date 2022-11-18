@@ -1,6 +1,10 @@
+const dotenv = require("dotenv");
 const express = require("express");
 const mongoose = require("mongoose");
 const app = express();
+
+dotenv.config({ path: "./config.env" });
+require("./db/conn");
 
 // const DB =
 //   "mongodb+srv://saumyxa:auth@cluster0.cydzejp.mongodb.net/mernstack?retryWrites=true&w=majority";
@@ -33,15 +37,17 @@ const app = express();
 //   mongoose.connection.on("connected", (err) => {
 //     console.log("connected with database");
 //   });
+// const DB = process.env.DATABASE;
+const PORT = process.env.PORT;
 
-mongoose.connect("mongodb+srv://saumyxa:auth@cluster0.cydzejp.mongodb.net/mernstack?retryWrites=true&w=majority");
-mongoose.connection.on("error", (err) => {
-    console.log("connection failed");
-  });
-  
-  mongoose.connection.on("connected", (err) => {
-    console.log("connected with database");
-  });
+// mongoose.connect(DB);
+// mongoose.connection.on("error", (err) => {
+//   console.log("connection failed");
+// });
+
+// mongoose.connection.on("connected", (err) => {
+//   console.log("connected with database");
+// });
 
 //middleware
 
@@ -66,6 +72,6 @@ app.get("/about", middleware, (req, res) => {
   res.send("hello");
 });
 
-app.listen(5000, () => {
+app.listen(PORT, () => {
   console.log("server is running");
 });
