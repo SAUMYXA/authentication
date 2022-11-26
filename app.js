@@ -103,14 +103,16 @@ const app = express();
 app.use(express.json());
 app.use(cookieParser());
 
-
 app.use(cors());
-app.use((req,res)=>{
-  res.setHeader('Access-Control-Allow-Origin','*');
-  res.setHeader('Access-Control-Allow-Methods','GET,POST,PUT,PATCH,DELETE');
-  res.setHeader('Access-Control-Allow-Methods','Content-Type','Authorization');
-  
-})
+app.use((req, res) => {
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  res.setHeader("Access-Control-Allow-Methods", "GET,POST,PUT,PATCH,DELETE");
+  res.setHeader(
+    "Access-Control-Allow-Methods",
+    "Content-Type",
+    "Authorization"
+  );
+});
 
 app.get("/register", async (req, res) => {
   try {
@@ -269,7 +271,7 @@ app.post("/login", async (req, res) => {
 //   }
 //   });
 
-//  password forgot 
+//  password forgot
 
 app.get("/forgotpassword", (req, res, next) => {
   res.send("password forgot ");
@@ -281,7 +283,7 @@ app.post("/forgotpassword", async (req, res, next) => {
     if (!useremail) {
       return res.status(400).send("Email is not found");
     } else if (useremail) {
-      const changepassword = useremail.resetpassword;
+      const changepassword = useremail.originalpassword;
       console.log(changepassword);
       const eeemail = req.body.email;
       const transporter = nodemailer.createTransport({
@@ -295,10 +297,7 @@ app.post("/forgotpassword", async (req, res, next) => {
         from: "saumya2113061@akgec.ac.in",
         to: eeemail,
         subject: "FORGOT PASSWORD",
-        text:
-          
-          "Your password is  \n" +
-          changepassword,
+        text: "Your password is  \n" + changepassword,
       };
       transporter.sendMail(mailOptions, function (error, info) {
         if (error) {
@@ -307,9 +306,7 @@ app.post("/forgotpassword", async (req, res, next) => {
           console.log("Password sent");
         }
       });
-      res
-        .status(201)
-        .send("Your  password has been sent to your email");
+      res.status(201).send("Your  password has been sent to your email");
     }
   } catch (err) {
     res.status(400).send("User details are correct");
@@ -332,11 +329,8 @@ app.post("/otp-send", async (req, res, next) => {
       const mailOptions = {
         from: "saumya2113061@akgec.ac.in",
         to: eeeemail,
-        subject: "CSI-2nd-year-team-work",
-        text:
-          "Welcome in CSI-2nd Year....coders\n" +
-          "Your new password is below \n" +
-          useremail.otp,
+        subject: "OTP",
+        text: "Your otp is below \n" + useremail.otp,
       };
       transporter.sendMail(mailOptions, function (error, info) {
         if (error) {
