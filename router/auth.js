@@ -1,14 +1,18 @@
-const express = require('express');
-const router = express.Router();
+const jwt = require('jsonwebtoken');
+const User = require("../model/userSchema");
+const cookieParser = require('cookie-parser')
 
-router.get('/', (req, res) => {
-    res.send(`Hello world from the server rotuer js`);
-});
+const auth = async(req,res,next)=>{
+    try{
+const token = req.cookies.jwt;
+const userverify = jwt.verify(token, process.env.JWT_SECRET);
+console.log(userverify)
+const user= await User.findOne({_id: userverify._id});
+console.log(user);
+next();
+    }catch(err){
+res.status(400).send(err);
+    }
+}
 
-router.post('/register', (req, res) => {
-    console.log(req.body);
-    res.json({ message: req.body });
-    // res.send("mera register page");
-});
-
-module.exports = router;
+module.exports = auth;

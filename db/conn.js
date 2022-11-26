@@ -1,12 +1,9 @@
 const mongoose = require("mongoose");
 
-const DB = process.env.DATABASE;
-
-mongoose.connect(DB);
-mongoose.connection.on("error", (err) => {
-  console.log("connection failed");
-});
-
-mongoose.connection.on("connected", (err) => {
-  console.log("connected with database");
-});
+mongoose.connect("mongodb+srv://saumyxa:root@cluster0.qpakkuq.mongodb.net/?retryWrites=true&w=majority",{
+  useNewUrlParser: true,
+}).then(()=>{
+  console.log("Connection with database is successfully")
+}).catch((err)=>{
+  console.log("no connection")
+})
