@@ -271,7 +271,7 @@ app.post("/login", async (req, res) => {
 
 //  password forgot 
 
-app.get("forgotpassword", (req, res, next) => {
+app.get("/forgotpassword", (req, res, next) => {
   res.send("password forgot ");
 });
 app.post("/forgotpassword", async (req, res, next) => {
